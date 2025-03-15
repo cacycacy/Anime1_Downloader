@@ -1,0 +1,10 @@
+name: AnimeDownloader
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.6  # 或使用你所需的 3.6+ 版本
+  - ffmpeg      # 利用 conda-forge 提供的 ffmpeg 套件
+  - pip
+  - pip:
+      - -r requirements.txt

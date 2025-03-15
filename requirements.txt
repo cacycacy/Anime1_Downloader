@@ -1,0 +1,7 @@
+requests
+beautifulsoup4
+m3u8
+pyyaml
+colorama
+rich
+lxml

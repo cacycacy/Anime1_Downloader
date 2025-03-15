@@ -1,0 +1,27 @@
+# config.yml
+
+root_download_path: "./downloads"  # 下载文件的根目录
+urls_path: "./urls.txt"            # 存放下载链接的文件路径
+use_multithreading: true                # 是否使用多线程下载
+
+
+seasons:
+  第一季: 01
+  第二季: 02
+  第三季: 03
+  第四季: 04
+  第五季: 05
+  第六季: 06
+  第七季: 07
+  第八季: 08
+
+headers:
+  Accept: "*/*"
+  Accept-Language: "zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7"
+  DNT: "1"
+  Sec-Fetch-Mode: "cors"
+  Sec-Fetch-Site: "same-origin"
+  cookie: "_ga=GA1.1.584822630.1742051652;"
+  Content-Type: "application/x-www-form-urlencoded"
+  user-agent: "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3573.0 Safari/537.36"
+
