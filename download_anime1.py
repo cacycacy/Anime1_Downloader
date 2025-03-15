@@ -244,7 +244,7 @@ class AnimeDownloader:
             raise ValueError(f"影片連結的副檔名不支援：{video_suffix}")
 
         self.validate_download(video_path)
-        # self.styled_print(f"成功下載：", color=Fore.GREEN, style=Style.BRIGHT, suffix=f"{video_path.name}")
+        self.styled_print(f"成功下載：", color=Fore.GREEN, style=Style.BRIGHT, suffix=f"{video_path.name}")
 
     def download_mp4(self, download_url: str, video_path: Path, headers: dict) -> None:
         """
@@ -273,6 +273,7 @@ class AnimeDownloader:
                     f.write(chunk)
                     self.progress.update(task_id, advance=len(chunk))
         temp_video_path.rename(video_path)
+        self.progress.remove_task(task_id)
 
     def download_ts(self, download_url: str, video_path: Path, headers: dict) -> None:
         """
@@ -309,6 +310,7 @@ class AnimeDownloader:
         tmp_video_path = self.convert_ts_to_mp4(ts_folder, m3u8_playlist_path)
         tmp_video_path.rename(video_path)
         shutil.rmtree(ts_folder)
+        self.progress.remove_task(task_id)
 
     @staticmethod
     def convert_ts_to_mp4(ts_folder: Path, m3u8_path: Path) -> Path:
