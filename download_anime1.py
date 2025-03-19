@@ -296,7 +296,7 @@ class AnimeDownloader:
         total_ts = len(ts_links)
         task_id = self.progress.add_task(f"{video_path.name} (TS)", total=total_ts)
         tasks: List[concurrent.futures.Future] = []
-        with concurrent.futures.ThreadPoolExecutor(max_workers=50) as pool:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=36) as pool:
             for ts_name, ts_url in ts_links.items():
                 ts_path = ts_folder / ts_name
                 tasks.append(pool.submit(download_single_ts, ts_url, ts_path))
@@ -392,7 +392,7 @@ class AnimeDownloader:
                         self.failed_list.append(f"{url}: {e}")
                         self.styled_print("失敗：", color=Fore.RED, style=Style.BRIGHT,
                                           suffix=f"{url}: {e}")
-                with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+                with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
                     executor.map(download_wrapper, url_list)
         else:
             with self.progress:
