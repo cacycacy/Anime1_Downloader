@@ -10,6 +10,7 @@ from typing import List, Tuple, Optional, Dict
 import threading
 import concurrent.futures
 import urllib.parse
+import random
 
 import requests
 from bs4 import BeautifulSoup
@@ -285,7 +286,7 @@ class AnimeDownloader:
             ts_path.write_bytes(ts_response.content)
 
         ts_links: Dict[str, str] = self.parse_m3u8_from_url(download_url, headers)
-        ts_folder = Path(".ts")
+        ts_folder = Path(f".ts_temp_{random.randint(1000, 9999)}")
         ts_folder.mkdir(exist_ok=True)
         m3u8_playlist_path = ts_folder / "playlist.m3u8"
         with m3u8_playlist_path.open('w', encoding='utf-8') as f:
