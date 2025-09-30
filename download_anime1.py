@@ -18,6 +18,8 @@ import m3u8
 import yaml
 import colorama
 from colorama import Fore, Style
+from urllib.parse import urlparse
+import os
 
 from rich.progress import (
     Progress,
@@ -214,12 +216,23 @@ class AnimeDownloader:
 
         # 解析 cookie 資訊
         set_cookie = api_response.headers.get('set-cookie', '')
-        cookie_e = re.search(r"e=(.*?);", set_cookie, re.I)
-        cookie_p = re.search(r"p=(.*?);", set_cookie, re.I)
-        cookie_h = re.search(r"HttpOnly, h=(.*?);", set_cookie, re.I)
-        if not (cookie_e and cookie_p and cookie_h):
-            raise Exception("無法解析 cookie")
-        cookies = f"e={cookie_e.group(1)};p={cookie_p.group(1)};h={cookie_h.group(1)};"
+
+        jar = api_response.cookies  # or self.session.cookies
+        e = jar.get('e')
+        p = jar.get('p')
+        h = jar.get('h')
+        if not (e and p and h):
+            raise Exception("無法取得必要 cookie（e/p/h）")
+        cookies = f"e={e}; p={p}; h={h};"
+        # download_headers["Cookie"] = cookies
+
+        # cookie_e = re.search(r"e=(.*?);", set_cookie, re.I)
+        # cookie_p = re.search(r"p=(.*?);", set_cookie, re.I)
+        # cookie_h = re.search(r"HttpOnly, h=(.*?);", set_cookie, re.I)
+        # print(cookie_e, cookie_p, cookie_h)
+        # if not (cookie_e and cookie_p and cookie_h):
+        #     raise Exception("無法解析 cookie")
+        # cookies = f"e={cookie_e.group(1)};p={cookie_p.group(1)};h={cookie_h.group(1)};"
         download_headers = {
             "Accept": "*/*",
             "Accept-Encoding": 'identity;q=1, *;q=0',
